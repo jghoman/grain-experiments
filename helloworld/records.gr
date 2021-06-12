@@ -1,0 +1,48 @@
+record Person { name: String, age: Number }
+
+let user = { name: "Joe", age: 42 }
+
+enum Veggie { Squash, Cabbage, Broccoli }
+enum Fruit { Apples, Oranges, Bananas }
+
+enum Inventory<produce> { Crate(produce), Truckload(produce) }
+
+let veggieInventory = [Crate(Broccoli), Truckload(Cabbage)]
+let fruitInventory = [Crate(Apples), Truckload(Oranges)]
+
+
+print(user)
+print(Cabbage)
+
+export record Counter {
+    mut count: Number
+}
+
+let counter = { count: 0 }
+
+let addOne = (c) => {
+    c.count = incr(c.count)
+}
+
+let subtractOne = (c) => {
+    c.count = decr(c.count)
+}
+
+addOne(counter)
+addOne(counter)
+
+print(counter)
+
+subtractOne(counter)
+
+print(counter)
+
+
+let rec add2 = (list) => {
+    match (list) {
+        [first, ...rest] => [first + 2, ...add2(rest)],
+        [] => []
+    }
+}
+
+print(add2([1, 2, 3]))
