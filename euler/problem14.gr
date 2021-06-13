@@ -51,11 +51,14 @@ let longerList = (a, b) => {
 
 let max = 1000000
 //let max = 100
-let indices = Array.init(max - 1, n => n + 1)
-let sequences = Array.map(collatzSequence, indices)
 
-let longestSequence = Array.reduce((b, a) => longerList(b, a), [], sequences)
+let mut longest = collatzSequence(1)
+for(let mut i = 1; i < max; i = i + 1) {
+    if(i % 10000 == 0) {
+        print(i)
+    }
 
-print(longestSequence)
-print(Option.unwrap(List.head(longestSequence)))
+    longest = longerList(longest, collatzSequence(i))
+}
 
+print(longest)
