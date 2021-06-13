@@ -1,0 +1,61 @@
+// The following iterative sequence is defined for the set of positive integers:
+
+// n → n/2 (n is even)
+// n → 3n + 1 (n is odd)
+
+// Using the rule above and starting with 13, we generate the following sequence:
+
+// 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+// It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms.
+// Although it has not been proved yet (Collatz Problem), it is thought that all starting
+// numbers finish at 1.
+
+// Which starting number, under one million, produces the longest chain?
+
+// NOTE: Once the chain starts the terms are allowed to go above one million.
+
+import Array from "array"
+import List from "list"
+import String from "string"
+import Option from "option"
+
+let nextCollatz = (n) => {
+    if (n % 2 == 0) {
+        n / 2
+    } else {
+        3 * n + 1
+    }
+}
+
+let collatzSequence = (n) => {
+    let rec collatz = (list) => {
+        match (list) {
+            [head, ...rest] when head == 1 => List.reverse(list),
+            [head, ...rest] => collatz([nextCollatz(head), head, ...rest]),
+            [] => []
+        }
+    }
+
+    let seq = [n]
+
+    collatz(seq)
+}
+
+let longerList = (a, b) => {
+    if(List.length(a) > List.length(b)) {
+        a
+    } else {
+        b
+    }
+}
+
+let max = 1000000
+//let max = 100
+let indices = Array.init(max - 1, n => n + 1)
+let sequences = Array.map(collatzSequence, indices)
+
+let longestSequence = Array.reduce((b, a) => longerList(b, a), [], sequences)
+
+print(longestSequence)
+print(Option.unwrap(List.head(longestSequence)))
+
